@@ -11,6 +11,7 @@ from core.message_queue import MessageQueue
 from core.delivery import get_delivery_method
 import core.snmp_sender
 import argparse
+import time
 
 
 CONFIG_PATH = 'config/apstra_snmp_config.yaml'
@@ -66,7 +67,22 @@ def main():
 
     logger.info('Apstra SNMP converter started.')
     logger.debug('Loaded configuration: %s', config)
-    # ...existing code for polling, syslog listening, queue processing...
+
+    poll_interval = apstra_cfg.get('poll_interval', 30)
+    while True:
+        for blueprint in apstra_cfg['blueprints']:
+            if blueprint.get('enabled'):
+                blueprint_id = blueprint['id']
+                blueprint_name = blueprint.get('name', blueprint_id)
+                logger.info(f"Polling tasks for blueprint {blueprint_name} ({blueprint_id})")
+                try:
+                    tasks = api_client.get_tasks(blueprint_id)
+                    logger.debug(f"API response for blueprint {blueprint_id}: {tasks}")
+                    # TODO: Process tasks, queue messages, send SNMP traps
+                except Exception as e:
+                    logger.error(f"Error polling tasks for blueprint {blueprint_id}: {e}")
+        logger.info(f"Sleeping for {poll_interval} seconds before next poll.")
+        time.sleep(poll_interval)
 
 if __name__ == '__main__':
     main()
