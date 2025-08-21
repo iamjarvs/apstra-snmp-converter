@@ -1,21 +1,19 @@
 # Apstra API Configuration
 apstra:
-  host: "192.168.1.100"
+  host: "10.28.173.3"
   username: "se_demo"
-  password: "your_password"
+  password: "se_demo"
   blueprints:
     - id: "a7c2cd1d-da6e-4c3c-8e34-acbd131d3e76"
       name: "production-blueprint"
       enabled: true
-    - id: "b8d3e2f4-eb7f-5d4e-9f45-bd92e4f4e87a"
+    - id: "a7c2cd1d-da6e-4c3c-8e34-acbd131d3e24"
       name: "staging-blueprint"
       enabled: true
-    - id: "c9e4f5a6-fc8a-6e5f-a056-ce93f5a5f98b"
-      name: "test-blueprint"
-      enabled: false
   poll_interval: 30
   api_timeout: 10
-  token_refresh_buffer: 300
+  token_refresh_buffer: 1200
+
 
 redis:
   host: "localhost"
@@ -59,7 +57,7 @@ syslog:
 
 application:
   log_level: "INFO"
-  log_file: "/var/log/apstra_snmp_converter.log"
+  log_file: "./apstra_snmp_converter.log"
   max_retries: 3
   retry_delay: 5
   worker_processes: 2
