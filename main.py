@@ -10,6 +10,7 @@ from core.redis_store import RedisStore
 from core.message_queue import MessageQueue
 from core.delivery import get_delivery_method
 import core.snmp_sender
+import argparse
 
 
 CONFIG_PATH = 'config/apstra_snmp_config.yaml'
@@ -19,8 +20,24 @@ def load_config(path):
         return yaml.safe_load(f)
 
 def main():
+    parser = argparse.ArgumentParser(description='Apstra syslog/API to SNMP converter')
+    parser.add_argument('-v', '--verbose', action='count', default=0,
+                        help='Increase output verbosity (-v, -vv, -vvv)')
+    args = parser.parse_args()
+
     config = load_config(CONFIG_PATH)
-    setup_logging(config['application']['log_level'], config['application']['log_file'])
+
+    # Map verbosity to logging level
+    if args.verbose == 0:
+        log_level = config['application'].get('log_level', 'INFO')
+    elif args.verbose == 1:
+        log_level = 'INFO'
+    elif args.verbose == 2:
+        log_level = 'DEBUG'
+    else:
+        log_level = 'DEBUG'
+
+    setup_logging(log_level, config['application']['log_file'])
     logger = logging.getLogger('apstra_snmp_converter')
 
     # Redis setup
@@ -47,8 +64,8 @@ def main():
     snmp_cfg = config['snmp']
     snmp_sender = get_delivery_method('snmp')(snmp_cfg['destinations'], snmp_cfg['oids'])
 
-    # Main loop stub (polling, syslog, queue processing)
     logger.info('Apstra SNMP converter started.')
+    logger.debug('Loaded configuration: %s', config)
     # ...existing code for polling, syslog listening, queue processing...
 
 if __name__ == '__main__':
