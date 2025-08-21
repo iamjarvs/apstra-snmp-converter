@@ -1,0 +1,4 @@
+pysnmp
+requests
+redis
+PyYAML

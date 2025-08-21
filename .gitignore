@@ -1,0 +1,63 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+*.pot
+*.mo
+env/
+.env/
+.venv/
+venv/
+ENV/
+env.bak/
+.envrc
+.python-version
+.mypy_cache/
+.pytest_cache/
+.pdm.toml
+.pdm.lock
+__pypackages__/
+*.sqlite3
+
+# Mac OS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+*.swp
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Test output
+junit.xml
+
+# System files
+Thumbs.db
+Desktop.ini
