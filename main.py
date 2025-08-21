@@ -9,6 +9,8 @@ from core.api_client import ApstraAPIClient
 from core.redis_store import RedisStore
 from core.message_queue import MessageQueue
 from core.delivery import get_delivery_method
+import core.snmp_sender
+
 
 CONFIG_PATH = 'config/apstra_snmp_config.yaml'
 
